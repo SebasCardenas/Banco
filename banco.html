@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Latest compiled and minified JavaScript -->
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
+        <!-- Agregue las "librerias" -->
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+</head>
+<body>
+    <br>
+    <br>
+    <div class="col-6 col-md-5" style="margin-left: 400px">
+                    <div class="panel panel-default">
+                    <div class="panel-heading panel-heading-custom">
+                    <div class="panel-heading panel-heading-custom">
+                    <center>
+                <h4 class="panel-title">Movimientos Cliente</h4>
+                </center>
+        </div>
+            <div class="panel-body">
+        <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group controls">
+           <label for="Nombre">Nombre Movimiento</label>
+        <input type="text" class="form-control" id="NombreM" placeholder="Nombre">
+           
+        </div>
+    </div>
+ </div>
+                         <div class="panel-body">
+        <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group controls">
+           <label for="Nombre">Tipo Movimiento</label>
+        
+          <select class="form-control" id="TipoM" placeholder="Tipo">
+           
+      <option>Uno</option>
+      <option>Dos</option>
+            </select> 
+        </div>
+    </div>
+ </div>
+                         <div class="panel-body">
+        <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group controls">
+           <label for="Nombre">Valor Movimiento</label>
+        <input type="text" class="form-control" id="ValorM" placeholder="Valor">
+            
+        </div>
+    </div>
+ </div>
+                       
+<p align = "RIGHT"><button id="bCrear" type="button" class="btn btn-primary btn-sm">Crear Modificación</button></p>
+    <br>      
+      <table class="table table-bordered">
+  <tr>
+      <th>Nombre Movimiento</th>
+      <th>Tipo Movimiento</th>
+      <th>Valor Movimiento</th>
+      <th>Fecha Registro</th>
+      <th>Acción</th>
+      
+          </tr>
+          <tbody id ="contenedor">
+              
+          </tbody>
+</table>               
+</div>
+    </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> 
+       <script>
+		$(document).ready(function()
+		{    
+			$('#bCrear').click(function()
+			{        
+				/*Captura de datos escrito en los inputs*/        
+				var NombreM = document.getElementById("NombreM").value;
+				var TipoM = document.getElementById("TipoM").value;
+				var ValorM = document.getElementById("ValorM").value;
+				var arreglo = [TipoM, ValorM];
+				/*Guardando los datos en el LocalStorage*/
+				sessionStorage.setItem(NombreM, JSON.stringify(arreglo));
+				/*Limpiando los campos o inputs*/
+				document.getElementById("NombreM").value = "";
+				document.getElementById("TipoM").value = "";
+				document.getElementById("ValorM").value = "";
+				cargar();
+    		});   
+		});
+		function cargar()
+		{
+			var tabla = document.getElementById("contenedor");
+			tabla.innerHTML = "";
+			for(var i=0; i<sessionStorage.length; i++)
+			{
+				var key = sessionStorage.key(i);
+				var arreglo = JSON.parse(sessionStorage.getItem(key));
+				tabla.innerHTML += 	"<tr>" +  
+										"<td>" + key +"</td>" +
+										"<td>" + arreglo[0] +"</td>" +
+										"<td>" + arreglo[1] +"</td>" +
+										"<td> </td>" +
+										'<td style="text-align: center">' + '<button class="btn btn-primary" onClick="Borrar(\''+ key +'\')"> Eliminar </button> </td>' +
+										"</tr>";
+			
+            
+            }	
+		}
+           
+           function Borrar(key){
+               sessionStorage.removeItem(key);
+			   cargar();
+           }
+	</script>
+        
+</body>
+</html>
